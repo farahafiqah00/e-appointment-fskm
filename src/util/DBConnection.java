@@ -40,7 +40,7 @@ public class DBConnection {
             USER = user;
             PASS = pass;
             String separator = hostPart.contains("?") ? "&" : "?";
-            URL = "jdbc:mysql://" + hostPart + separator + "useSSL=false&serverTimezone=Asia/Kuala_Lumpur";
+            URL = "jdbc:mysql://" + hostPart + separator + "useSSL=false&serverTimezone=Asia/Kuala_Lumpur&allowPublicKeyRetrieval=true";
         }
     }
 
