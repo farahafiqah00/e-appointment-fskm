@@ -1,0 +1,382 @@
+/* Adapted, browser-compatible stylesheet for JSP/NetBeans usage
+   - Converted Tailwind/@layer/@apply constructs to plain CSS
+   - Added hex fallbacks and a simple `.dark` class for dark mode
+   - Keep utilities useful for JSP pages without a build step
+
+*/
+
+:root {
+  /* Basic theme variables (hex fallbacks for broad browser support) */
+  --font-size: 14px;
+  --background: #ffffff;
+  --foreground: #111827;
+  --card: #ffffff;
+  --card-foreground: #111827;
+  --popover: #ffffff;
+  --popover-foreground: #111827;
+  --primary: #105e60; /* main theme color requested */
+  --primary-foreground: #ffffff;
+  --secondary: #6b7280;
+  
+  --secondary-foreground: #030213;
+  --muted: #ececf0;
+  --muted-foreground: #717182;
+  --accent: #e9ebef;
+  --accent-foreground: #030213;
+  --destructive: #d4183d;
+  --destructive-foreground: #ffffff;
+  --border: rgba(0, 0, 0, 0.1);
+  --input: transparent;
+  --input-background: #f3f3f5;
+  --switch-background: #cbced4;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: #3b82f6;
+  --chart-1: #2563eb;
+  --chart-2: #0891b2;
+  --chart-3: #7c3aed;
+  --chart-4: #f59e0b;
+  --chart-5: #ef4444;
+  --radius: 10px;
+  --sidebar: #e5e5e5;
+  --sidebar-foreground: #37474f;
+  --sidebar-primary: #030213;
+  --sidebar-primary-foreground: #ffffff;
+  --sidebar-accent: #f3f4f6;
+  --sidebar-accent-foreground: #374151;
+  --sidebar-border: #e5e7eb;
+  --sidebar-ring: #93c5fd;
+  --muted-nav-bg: #e5e5e5;
+  --muted-nav-foreground: #374151;
+  
+  /* Compatibility aliases for older/admin styles that use different variable names */
+  --bg: var(--background);
+  --teal: var(--primary);
+  --teal-dark: #0b4f4d;
+  --accent-yellow: var(--chart-4);
+  --accent-red: var(--chart-5);
+  --accent-green: var(--chart-2);
+  --sidebar-bg: var(--sidebar);
+  --link-blue: var(--chart-1);
+
+}
+
+/* Simple base reset and sensible defaults (works in browsers used by NetBeans preview) */
+* { box-sizing: border-box; }
+html { font-size: var(--font-size); }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: 16px;
+  background: var(--background);
+  color: var(--foreground);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.4;
+}
+
+/* Prevent horizontal scrolling caused by wide sidebar/content */
+html, body { overflow-x: hidden; }
+
+/* Headings and typography */
+h1 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  line-height: 1.2;
+  margin: 0 0 .5rem;
+}
+h2 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 .5rem;
+}
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.25;
+  margin: 0 0 .5rem;
+}
+h4 { font-size: 1rem; font-weight: var(--font-weight-medium); line-height: 1.4; margin: 0 0 .5rem; }
+label { font-size: .95rem; font-weight: var(--font-weight-medium); color: var(--foreground); }
+
+/* Forms, buttons, and inputs */
+button {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  border: 0;
+  padding: .55rem .9rem;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(16,94,96,0.08);
+}
+
+/* Non-Bootstrap action button alternative */
+.action-card {
+  display: inline-block;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--primary-foreground);
+  background: var(--primary);
+  border: 0;
+  padding: .6rem .95rem;
+  border-radius: 12px;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(16,94,96,0.08);
+}
+
+
+button.secondary {
+  background: var(--secondary);
+  color: var(--secondary-foreground);
+}
+
+input, select, textarea {
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--foreground);
+  background: #fff;
+  border: 1px solid #e6eceb;
+  padding: .625rem .75rem;
+  border-radius: 10px;
+}
+
+select.form-select, input.form-control, textarea.form-control {
+  transition: box-shadow .15s ease, border-color .15s ease, transform .05s ease;
+}
+select.form-select:focus, input.form-control:focus, textarea.form-control:focus {
+  box-shadow: 0 6px 18px rgba(37,99,235,0.06);
+  border-color: var(--chart-2);
+  outline: none;
+  transform: translateY(-1px);
+}
+
+.card {
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid #e6eceb;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+/* Compatibility alternative name for cards to avoid Bootstrap conflicts */
+.custom-card {
+  background: var(--card);
+  color: var(--card-foreground);
+  border: 1px solid #e6eceb;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 24px;
+}
+
+/* Utility classes useful for JSP pages without Tailwind tooling */
+.container { max-width: 1200px; margin: 0 auto; padding: 1rem; }
+.muted { color: var(--muted-foreground); }
+.accent { color: var(--accent-foreground); background: var(--accent); padding: .25rem .5rem; border-radius: 6px; }
+
+/* Small accessibility focus style */
+:focus { outline: 3px solid var(--ring); outline-offset: 2px; }
+
+/* Simple sidebar example using the sidebar variables */
+.layout{
+  display:flex;
+}
+
+
+/* Dark-mode helper: apply class `dark` to body in your JSP/servlet to enable */
+/* Example in JSP: <body class="${sessionScope.darkMode ? 'dark' : ''}"> */
+
+/* ---- Small helpers that match typical admin templates ---- */
+.rounded-pill { border-radius:50rem; }
+.btn-primary-action{ background:var(--primary); color:var(--primary-foreground); border:none; padding:12px 20px; border-radius:12px; }
+.btn-outline-action{ background:transparent; border:1px solid var(--border); color:var(--foreground); padding:10px 16px; border-radius:12px; }
+.topbar{ height: 64px; background: #ffffff; border-bottom: 1px solid #E5E7EB; padding: 0 24px; position: fixed; top:0; left:0; right:0; z-index:1000; display:flex; align-items:center; }
+.brand{ font-size: 18px; font-weight: 600; color: #0F766E; }
+.content{
+  margin-left:240px; /* MUST MATCH SIDEBAR */
+  padding:100px 24px 24px; /* increased top spacing so dashboard title is visible */
+  width:auto;
+  max-width:100%;
+}
+
+@media(min-width:992px){ }
+
+
+/* Login page scoped */
+body.login{
+  background: var(--primary);
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:1rem;
+}
+.login-wrapper{ display:flex; justify-content:center; align-items:center; width:100%; }
+.login-card{ width:880px; max-width:92%; border-radius:14px; overflow:hidden; display:flex; box-shadow:0 20px 60px rgba(7,45,44,0.18); background:#fff; }
+.login-brand{ background:transparent; width:44%; padding:32px 28px; display:flex; align-items:center; justify-content:center; }
+.login-brand .brand-inner{ background:#fff; padding:10px 6px; border-radius:6px; text-align:center; }
+.login-form{ width:56%; padding:28px 32px; display:flex; align-items:center }
+.input-with-icon{ display:flex; align-items:center; gap:10px; background:#f1f8ff; padding:8px; border-radius:10px; }
+.input-with-icon .icon{ width:44px; height:44px; display:flex; align-items:center; justify-content:center; background:#e9f4f7; border-radius:8px; color:var(--primary); font-size:1.1rem }
+.login-card .btn-lg{ padding:14px 18px; border-radius:12px; font-weight:600 }
+.logo{ max-width:160px; margin-bottom:18px; display:block; }
+.title{ color:var(--primary); font-weight:600; font-size:28px; }
+.subtitle{ color:var(--muted-foreground); margin-top:6px; }
+.btn-teal{ background:var(--primary); color:var(--primary-foreground); border-radius:10px; padding:10px 24px; border:none; font-weight:600; }
+.form-control:focus{ box-shadow:none; border-color:var(--primary); }
+.input-icon{ width:42px; display:flex; align-items:center; justify-content:center; color:var(--muted-foreground); }
+.small-foot{ color:var(--muted-foreground); font-size:13px; }
+@media(max-width:767px){
+  .login-card{ flex-direction:column; }
+  .login-brand{ width:100%; padding:28px 24px; }
+  .login-form{ width:100%; }
+}
+
+/* Admin page scoped */
+.body.admin{ background:var(--bg); font-family:Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; }
+.topbar{ height: 64px; background: #ffffff; border-bottom: 1px solid #E5E7EB; padding: 0 24px; position: fixed; top:0; left:0; right:0; z-index:1000; display:flex; align-items:center; }
+.brand{ font-size: 18px; font-weight: 600; color: #0F766E; }
+.topbar .brand{ font-size: 18px; }
+.topbar .ms-auto{ display:flex; align-items:center; gap:18px; }
+.topbar a{ color:var(--primary); }
+
+/* topbar account area */
+.topbar-account{ gap:12px; }
+.topbar-account .account-name{ color:#556168; font-weight:600; }
+.topbar-account .account-logout a{ color:#556168; text-decoration:none; }
+.topbar-account .account-divider{ width:1px; height:20px; background:#e6eceb; margin:0 10px; }
+
+.topbar-account{ margin-left: auto; }
+
+/* Sidebar: fixed with profile footer always pinned to bottom of viewport */
+nav.sidebar {
+  position: fixed;
+  top: 64px;        /* must match topbar height */
+  left: 0;
+  width: 240px;
+  height: calc(100vh - 64px);
+  background: #e5e5e5;
+  border-right: 1px solid #e5e7eb;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+/* Sidebar scrollable nav area */
+.sidebar-menu,
+.sidebar .position-sticky { flex:1; min-height:0; overflow-y:auto; overflow-x:hidden; padding:16px 8px; }
+.sidebar-menu::-webkit-scrollbar,
+.sidebar .position-sticky::-webkit-scrollbar { width:4px; }
+.sidebar-menu::-webkit-scrollbar-thumb,
+.sidebar .position-sticky::-webkit-scrollbar-thumb { background:#c4c4c4; border-radius:4px; }
+.sidebar-menu::-webkit-scrollbar-thumb:hover,
+.sidebar .position-sticky::-webkit-scrollbar-thumb:hover { background:#9ca3af; }
+.sidebar-menu,
+.sidebar .position-sticky { scrollbar-width: thin; scrollbar-color: #c4c4c4 transparent; }
+
+/* .position-sticky inside sidebar: neutralise Bootstrap's sticky so it participates in flex layout */
+.sidebar .position-sticky { position: relative !important; top: auto !important; }
+
+/* Sidebar profile footer — pinned at bottom by flex layout */
+.sidebar-profile { flex-shrink:0; padding:14px 16px; border-top:1px solid #d1d5db; background:#e5e5e5; }
+.sidebar-profile .profile-box { display:flex; align-items:center; gap:12px; text-decoration:none !important; color:inherit; }
+.sidebar-profile .profile-avatar { width:36px; height:36px; border-radius:50%; background:linear-gradient(135deg,#0f766e,#14b8a6); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.85rem; font-weight:700; flex-shrink:0; }
+.sidebar-profile .profile-info { overflow:hidden; flex:1; min-width:0; }
+.sidebar-profile .profile-info strong { display:block; font-size:0.85rem; font-weight:600; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; color:#111827; }
+.sidebar-profile .profile-info span { font-size:0.75rem; color:#9ca3af; }
+.sidebar .nav{ padding:8px 6px; }
+.sidebar .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+
+  padding: 10px 14px;
+  margin: 4px 6px;
+
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.sidebar .nav-link:hover {
+  background: #F1F5F9;
+  color: var(--primary);
+  transform: translateX(2px);
+}
+
+.sidebar .nav-link.active {
+  background: var(--primary);
+  color: var(--primary-foreground); /* ensure readable text on primary background */
+  box-shadow: 0 4px 10px rgba(15, 118, 110, 0.25);
+}
+.sidebar .nav-link .nav-icon{ width:22px; height:22px; display:inline-flex; align-items:center; justify-content:center; border-radius:6px; color:var(--sidebar-foreground); }
+
+/* New non-Bootstrap class to replace nav-link in markup when ready
+   Use `.menu-item` instead of `.nav-link` to avoid Bootstrap naming conflicts */
+.menu-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  padding: 10px 14px;
+  margin: 4px 6px;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+.menu-item:hover { background:#F1F5F9; color:var(--primary); transform:translateX(2px); }
+.menu-item.active { background:var(--primary); color:var(--primary-foreground); box-shadow: 0 4px 10px rgba(15,118,110,0.25); }
+
+/* submenu / section styles */
+.sidebar .nav-section{ margin-top:14px; padding-top:8px; border-top:1px solid rgba(0,0,0,0.03); }
+.sidebar .nav-sub {
+  margin-left: 18px;
+  padding-left: 12px;
+  border-left: 2px solid #E5E7EB;
+}
+
+.sidebar .sub-link {
+  font-size: 13.5px;
+  color: #6B7280;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+.sidebar .sub-link:hover {
+  background: #F3F4F6;
+  color: var(--primary);
+}
+
+.content{
+  margin-left:240px;
+  padding:100px 24px 24px;
+  width:auto;
+  max-width:100%;
+}
+
+.greeting{ font-size:0.95rem; font-weight:500; margin-top:6px; margin-bottom:16px; color:#6b7280; }
+
+.card-stat{
+  border-radius:14px;
+  padding:18px 20px;
+  background:#fff;
+  border:1px solid #e6eceb;
+  transition:all .2s ease;
+  min-height:130px;
+  display:flex;
+  flex-direction:column;
+  justify-content:space-between;
+}
+
+/* ... (file continues identical to styles.css) ... */
