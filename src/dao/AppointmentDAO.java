@@ -295,12 +295,12 @@ public class AppointmentDAO {
         List<Map<String, Object>> out = new ArrayList<>();
         String sql = "SELECT DISTINCT ee.id, CONCAT(COALESCE(CONCAT(ee.title, ' '), ''), ee.name) AS name, ee.affiliation, " +
                      "COALESCE(s.name, ee.specialization, '') AS specialization_name, " +
-                     "COALESCE(exp.name, '') AS expertise_name " +
+                     "COALESCE(exp.name, '') AS expertise_name, ee.name AS sort_name " +
                      "FROM external_examiner ee " +
                      "JOIN nomination n ON n.external_examiner_id = ee.id " +
                      "LEFT JOIN specialization s   ON s.id   = ee.specialization_id " +
                      "LEFT JOIN expertise      exp ON exp.id = ee.expertise_id " +
-                     "WHERE n.status = 'verified' ORDER BY ee.name";
+                     "WHERE n.status = 'verified' ORDER BY sort_name";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement ps = conn.prepareStatement(sql);
              ResultSet rs = ps.executeQuery()) {
