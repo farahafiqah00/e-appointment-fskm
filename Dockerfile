@@ -18,3 +18,7 @@ RUN chmod +x /entrypoint.sh
 
 EXPOSE 8080
 CMD ["/entrypoint.sh"]
+
+RUN printf '#!/bin/sh\nsed -i "s/port=\"8080\"/port=\"${PORT}\"/" "$CATALINA_HOME/conf/server.xml"\nexec catalina.sh run\n' > /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+CMD ["/entrypoint.sh"]
