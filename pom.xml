@@ -70,7 +70,7 @@
             </plugin>
             <plugin>
                 <artifactId>maven-war-plugin</artifactId>
-                <version>3.3.4</version>
+                <version>3.3.2</version>
                 <configuration>
                     <warSourceDirectory>${project.basedir}/web</warSourceDirectory>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
