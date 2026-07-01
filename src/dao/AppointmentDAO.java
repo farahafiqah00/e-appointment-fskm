@@ -423,14 +423,14 @@ public class AppointmentDAO {
                 "  COALESCE(s.name, COALESCE(ee.specialization,'')) AS specialization_name, " +
                 "  COALESCE(exp.name,'') AS expertise_name, " +
                 "  COALESCE(dv.name,'') AS division_name, " +
-                "  COALESCE(ar.name,'') AS area_name " +
+                "  COALESCE(ar.name,'') AS area_name, ee.name AS sort_name " +
                 "FROM external_examiner ee " +
                 "JOIN nomination n ON n.external_examiner_id = ee.id AND n.status = 'verified' " +
                 "LEFT JOIN specialization s   ON s.id   = ee.specialization_id " +
                 "LEFT JOIN expertise      exp ON exp.id = ee.expertise_id " +
                 "LEFT JOIN division       dv  ON dv.id  = ee.division_id " +
                 "LEFT JOIN area           ar  ON ar.id  = ee.area_id " +
-                "ORDER BY ee.name";
+                "ORDER BY sort_name";
             try (PreparedStatement ps = conn.prepareStatement(sql3);
                  ResultSet rs = ps.executeQuery()) {
                 while (rs.next()) {
